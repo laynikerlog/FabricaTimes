@@ -1,4 +1,4 @@
-// Product
+
 class CamisaEsportiva {
     private String time;
     private String historia;
@@ -14,7 +14,7 @@ class CamisaEsportiva {
     }
 }
 
-// Concrete Product
+
 class Time {
     private String nome;
     private String historia;
@@ -39,12 +39,12 @@ class Time {
     }
 }
 
-// Creator (Factory Method)
+
 interface FabricaEsportiva {
     CamisaEsportiva criarCamisa();
 }
 
-// Concrete Creators
+
 class FabricaNike implements FabricaEsportiva {
     @Override
     public CamisaEsportiva criarCamisa() {
