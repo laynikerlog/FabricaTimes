@@ -1,4 +1,3 @@
-
 class CamisaEsportiva {
     private String time;
     private String historia;
@@ -13,7 +12,6 @@ class CamisaEsportiva {
         System.out.println("História do time: " + historia);
     }
 }
-
 
 class Time {
     private String nome;
@@ -39,11 +37,9 @@ class Time {
     }
 }
 
-
 interface FabricaEsportiva {
     CamisaEsportiva criarCamisa();
 }
-
 
 class FabricaNike implements FabricaEsportiva {
     @Override
@@ -102,32 +98,88 @@ public class Main {
         java.util.Scanner scanner = new java.util.Scanner(System.in);
 
         while (true) {
-            System.out.println("Escolha uma fábrica esportiva ou digite 'sair' para encerrar:");
-            for (FabricaEsportiva fabrica : fabricas) {
-                System.out.println(fabrica.getClass().getSimpleName().replace("Fabrica", ""));
-            }
-            System.out.print("Digite o nome da fábrica: ");
-            String escolhaFabrica = scanner.nextLine();
+            System.out.println("Escolha um time ou digite 'sair' para encerrar:");
+            System.out.println("Brasil");
+            System.out.println("Flamengo");
+            System.out.println("Botafogo");
+            System.out.println("Fluminense");
+            System.out.println("Vasco");
+            System.out.print("Digite o nome do time: ");
+            String escolhaTime = scanner.nextLine();
 
-            if (escolhaFabrica.equalsIgnoreCase("sair")) {
+            if (escolhaTime.equalsIgnoreCase("sair")) {
                 break;
             }
 
-            FabricaEsportiva fabricaEsportiva = null;
-            for (FabricaEsportiva fabrica : fabricas) {
-                if (fabrica.getClass().getSimpleName().replace("Fabrica", "").equalsIgnoreCase(escolhaFabrica)) {
-                    fabricaEsportiva = fabrica;
-                    break;
-                }
-            }
+            String historiaTime = obterHistoriaTime(escolhaTime);
+            if (historiaTime != null) {
+                System.out.println("História do time " + escolhaTime + ": " + historiaTime);
 
-            if (fabricaEsportiva != null) {
-                CamisaEsportiva camisa = fabricaEsportiva.criarCamisa();
-                camisa.exibirDados();
+                FabricaEsportiva fabricaEsportiva = obterFabricaEsportivaPeloTime(fabricas, escolhaTime);
+                if (fabricaEsportiva != null) {
+                    System.out.println("Fábrica correspondente: "
+                            + fabricaEsportiva.getClass().getSimpleName().replace("Fabrica", ""));
+                    String historiaFabrica = obterHistoriaFabrica(
+                            fabricaEsportiva.getClass().getSimpleName().replace("Fabrica", ""));
+                    System.out.println("História da fábrica: " + historiaFabrica);
+                } else {
+                    System.out.println("Fábrica não encontrada para o time " + escolhaTime);
+                }
                 System.out.println();
             } else {
-                System.out.println("Fábrica não encontrada. Por favor, escolha uma das opções disponíveis.");
+                System.out.println("Time não encontrado. Por favor, escolha um dos times disponíveis.");
             }
+        }
+    }
+
+    private static String obterHistoriaTime(String nomeTime) {
+        switch (nomeTime.toLowerCase()) {
+            case "brasil":
+                return "O Brasil é conhecido como a seleção pentacampeã do mundo.";
+            case "flamengo":
+                return "O Flamengo é um dos clubes de futebol mais populares do Brasil, com uma grande história de sucesso nacional e internacional.";
+            case "botafogo":
+                return "O Botafogo é um clube de futebol tradicional do Rio de Janeiro, com uma história rica e várias conquistas importantes ao longo dos anos.";
+            case "fluminense":
+                return "O Fluminense é um dos clubes mais antigos e tradicionais do futebol brasileiro, com uma grande base de torcedores e uma história de sucesso no esporte.";
+            case "vasco":
+                return "O Vasco da Gama é um clube de futebol conhecido por sua rica história e tradição, tendo conquistado vários títulos nacionais e internacionais ao longo dos anos.";
+            default:
+                return null;
+        }
+    }
+
+    private static FabricaEsportiva obterFabricaEsportivaPeloTime(FabricaEsportiva[] fabricas, String nomeTime) {
+        switch (nomeTime.toLowerCase()) {
+            case "brasil":
+                return fabricas[0]; // Nike
+            case "flamengo":
+                return fabricas[1]; // Adidas
+            case "botafogo":
+                return fabricas[2]; // Puma
+            case "fluminense":
+                return fabricas[3]; // Umbro
+            case "vasco":
+                return fabricas[4]; // Kappa
+            default:
+                return null;
+        }
+    }
+
+    private static String obterHistoriaFabrica(String nomeFabrica) {
+        switch (nomeFabrica.toLowerCase()) {
+            case "nike":
+                return "A Nike é uma das maiores empresas de artigos esportivos do mundo, conhecida por seus produtos de alta qualidade e por patrocinar diversos atletas e equipes ao redor do globo.";
+            case "adidas":
+                return "A Adidas é uma das marcas esportivas mais reconhecidas do mundo, famosa por suas inovações tecnológicas e por patrocinar algumas das principais equipes e eventos esportivos.";
+            case "puma":
+                return "A Puma é uma marca esportiva de renome mundial, famosa por suas roupas e calçados esportivos de alta qualidade, bem como por sua presença em diversos esportes e eventos.";
+            case "umbro":
+                return "A Umbro é uma marca de artigos esportivos conhecida por suas roupas e equipamentos de futebol de alta qualidade, sendo utilizada por várias equipes profissionais em todo o mundo.";
+            case "kappa":
+                return "A Kappa é uma marca italiana de artigos esportivos, famosa por suas roupas e acessórios esportivos de estilo único e por seu apoio a diversas equipes e atletas em todo o mundo.";
+            default:
+                return null;
         }
     }
 }
